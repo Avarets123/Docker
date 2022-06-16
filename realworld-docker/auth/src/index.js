@@ -2,10 +2,7 @@ const express = require('express');
 const axios = require('axios').default;
 
 const { connectDb } = require('./helpers/db');
-const { port, host, db, apiUrl } = require('./configuration');
-
-
-
+const { port, host, db, apiUrl, smtpUrl } = require('./configuration');
 
 
 
@@ -14,11 +11,20 @@ app.get('/test', (req, res) => {
     res.send('Our auth server is working correctly');
 });
 
-app.get('/api/currentUser', (req, res) => {
-    res.json({
-        id: "123",
-        email: "ava@gm.com"
+
+
+app.get('/currentUser', (req, res) => {
+    axios.get(smtpUrl + '/checkmail').then(response => {
+        res.json({
+            id: "123",
+            email: "ava@gm.com",
+            response: response.data
+        });
+
+
     })
+
+    console.log(smtpUrl);
 });
 
 
@@ -28,7 +34,7 @@ app.get('/testwithapidata', (req, res) => {
             testapidata: response.data.testapidata
         })
     })
-})
+});
 
 
 const startServer = () => {
@@ -42,4 +48,4 @@ const startServer = () => {
 connectDb()
     .on('error', console.log)
     .on('disconnected', connectDb)
-    .on('open', startServer)
+    .on('open', startServer);

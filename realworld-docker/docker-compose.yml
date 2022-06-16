@@ -2,6 +2,22 @@ version: '3'
 
 services:
 
+  smtp:
+    build: ./smtp
+    command: npm run start
+    container_name: realworld-docker-smtp
+    networks:
+      - realworld-docker-network
+    depends_on:
+      - frontend
+      - api
+      - auth
+    restart: unless-stopped
+    environment:
+      - PORT=3003
+    ports:
+      - "3003:3003"
+
   nginx:
     image: nginx:stable-alpine
     container_name: realworld-docker-nginx
@@ -11,11 +27,15 @@ services:
       - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
     depends_on:
       - frontend
+      - auth
+      - api
     networks:
       - realworld-docker-network
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
     container_name: realworld-docker-frontend
     command: serve -s build -l 3000
     restart: unless-stopped
@@ -29,11 +49,11 @@ services:
     container_name: realworld-docker-api
     command: npm run start
     restart: unless-stopped
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "3001:3001"
     environment:
       - PORT=3001
-      - HOST=http://realworld-docker.com
+      # - HOST=http://realworld-docker.com
       - MONGO_URL=mongodb://api_db:27017/api
       - AUTH_API_URL=http://auth:3002/api
     depends_on:
@@ -46,13 +66,14 @@ services:
     container_name: realworld-docker-auth
     command: npm run start
     restart: unless-stopped
-    ports:
-      - "3002:3002"
+    # ports:
+    #   - "3002:3002"
     environment:
       - PORT=3002
-      - HOST=http://realworld-docker.com
+      # - HOST=http://realworld-docker.com
       - MONGO_URL=mongodb://auth_db:27017/auth
       - API_URL=http://api:3001/api
+      - SMTP_URL=http://smtp:3003/smtp
     depends_on:
       - auth_db
     networks:
