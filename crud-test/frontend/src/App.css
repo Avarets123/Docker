@@ -1,0 +1,109 @@
+.container {
+  width: 1024px;
+  margin-left: 15%;
+}
+
+.active {
+  background: blue;
+  padding: 15px;
+}
+
+header {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(86, 116, 75, 0.438);
+  height: 4rem;
+}
+
+
+.header-link {
+  text-decoration: none;
+  font-size: 24px;
+  color: rgb(33, 8, 8);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+
+.header-link:hover {
+  color: rgb(110, 20, 25);
+}
+
+.wrapper {
+  margin-top: 3rem;
+  padding: 1rem 0 1rem 3rem;
+  background: rgb(122, 166, 122);
+  display: inline-block;
+  height: 14rem;
+  width: 25rem;
+}
+
+
+input {
+  display: block;
+  width: 80%;
+  height: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.wrapper h3 {
+  text-align: center;
+  font-weight: normal;
+}
+
+.wrapper button {
+
+  height: 3rem;
+  background: rgba(1, 32, 1, 0.797);
+  color: rgb(199, 228, 244);
+  margin-left: 9%;
+  border: 1px solid;
+  cursor: pointer;
+  border: 3px solid rgba(231, 237, 229, 0.396);
+
+}
+
+.wrapper button:last-child {
+  background: red;
+  border: 3px solid rgba(7, 54, 22, 0.404);
+}
+
+
+.wrapper-friends {
+  margin-left: 5rem;
+}
+
+
+.list-groups, .list-people {
+  margin-top: 10rem;
+  height: 3rem;
+  background: silver;
+  border: 3px solid rgb(47, 190, 209);
+  cursor: pointer;
+}
+
+.list-people {
+  margin-left: 35%;
+}
+
+
+h2 {
+  text-align: center;
+  font-weight: normal;
+  color: red;
+}
+
+
+
+.form-login button, .form-register button {
+  margin-left: 10%;
+  background: lightblue;
+  height: 3rem;
+  width: 6rem;
+  border: 3px solid silver;
+
+}
