@@ -23,6 +23,8 @@ services:
      - "queue"
    networks:
     - myNetwork
+   env_file: 
+     - .env
    environment:
     - RABBITMQ_DEFAULT_USER=admin
     - RABBITMQ_DEFAULT_PASSWORD=admin
