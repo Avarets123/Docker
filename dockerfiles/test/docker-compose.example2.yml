@@ -5,6 +5,9 @@ services:
     context: .
     dockerfile: ./api/
    restart: unless-stopped
+# Данный сервис не запуститься вместе с остальными, для его запуска нужно указать на его профиль. docker-compose --profile backend up 
+   profiles:
+     - "backend"
    container_name: api
    volumes:
      - ./.env:/opt/app/.env
@@ -15,6 +18,9 @@ services:
   rmq:
    image: rabbitmq:3-management
    restart: unless-stopped
+# docker-compose --profile backend --profile queue up -d
+   profiles:
+     - "queue"
    networks:
     - myNetwork
    environment:
