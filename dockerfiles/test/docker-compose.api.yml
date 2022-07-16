@@ -1,0 +1,14 @@
+version: "3"
+services:
+  api:
+   ports:
+     - 9999:9999
+   build:
+    context: .
+    dockerfile: ./app/api/Dockerfile
+   restart: unless-stopped
+   container_name: api
+   volumes:
+     - ./.env:/opt/app/.env
+   networks:
+     - myNetwork

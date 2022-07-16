@@ -1,10 +1,34 @@
 version: "3"
 services:
+  app:
+    build:
+      context: .
+      dockerfile: ./apps/app/Dockerfile
+    restart: unless-stopped
+    container_name: app
+    ports:
+      - 3001:80
+    networks:
+      - myNetwork
+  converter:
+    build:
+      context: .
+      dockerfile: ./apps/converter/Dockerfile
+    restart: unless-stopped
+    container_name: converter
+    volumes:
+      - ./.env:/opt/app/.env
+    networks:
+      - myNetwork
+    depends_on:
+      - rmq
   api:
    build:
     context: .
-    dockerfile: ./api/
+    dockerfile: ./apps/api/Dockerfile
    restart: unless-stopped
+   ports:
+     - 3002:3000
 # Данный сервис не запуститься вместе с остальными, для его запуска нужно указать на его профиль. docker-compose --profile backend up 
    profiles:
      - "backend"
@@ -28,6 +52,12 @@ services:
    environment:
     - RABBITMQ_DEFAULT_USER=admin
     - RABBITMQ_DEFAULT_PASSWORD=admin
+  
+  backend-ext:
+# Наследует настройки от указанного файла
+    extends: 
+      file: docker-compose.api.yml
+      service: api
 
 networks:
   myNetwork:
