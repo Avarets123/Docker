@@ -19,7 +19,7 @@ services:
     volumes:
       - ./.env:/opt/app/.env
     networks:
-      - myNetwork
+      - myNetworkgit 
     depends_on:
       - rmq
   api:
